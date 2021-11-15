@@ -1,0 +1,61 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+
+<body>
+
+<h2>
+    <th:block th:if="${visit['new']}">新增</th:block>
+    探望记录
+</h2>
+
+<b>宠物信息</b>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>名字</th>
+        <th>生日</th>
+        <th>种类</th>
+        <th>所属者</th>
+    </tr>
+    </thead>
+    <tr>
+        <td th:text="${pet.name}"></td>
+        <td
+                th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${pet.type}"></td>
+        <td
+                th:text="${pet.owner?.firstName + ' ' + pet.owner?.lastName}"></td>
+    </tr>
+</table>
+
+<form th:object="${visit}" class="form-horizontal" method="post">
+    <div class="form-group has-feedback">
+        <input
+                th:replace="~{fragments/inputField :: input ('Date', 'date', 'date')}"/>
+        <input
+                th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}"/>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="hidden" name="petId" th:value="${pet.id}"/>
+            <button class="btn btn-default" type="submit">添加探望记录</button>
+        </div>
+    </div>
+</form>
+
+<br/>
+<b>过往被探望信息</b>
+<table class="table table-striped">
+    <tr>
+        <th>日期</th>
+        <th>探望详情</th>
+    </tr>
+    <tr th:if="${!visit['new']}" th:each="visit : ${pet.visits}">
+        <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
+        <td th:text=" ${visit.description}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

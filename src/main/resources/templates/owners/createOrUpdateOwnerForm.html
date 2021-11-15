@@ -1,0 +1,30 @@
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
+
+<body>
+
+<h2>拥有者</h2>
+<form th:object="${owner}" class="form-horizontal" id="add-owner-form" method="post">
+    <div class="form-group has-feedback">
+        <input
+                th:replace="~{fragments/inputField :: input ('名', 'firstName', 'text')}"/>
+        <input
+                th:replace="~{fragments/inputField :: input ('姓', 'lastName', 'text')}"/>
+        <input
+                th:replace="~{fragments/inputField :: input ('详细地址', 'address', 'text')}"/>
+        <input
+                th:replace="~{fragments/inputField :: input ('城市', 'city', 'text')}"/>
+        <input
+                th:replace="~{fragments/inputField :: input ('电话', 'telephone', 'text')}"/>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button
+                    th:with="text=${owner['new']} ? '新增拥有人' : '更新该人信息'"
+                    class="btn btn-default" type="submit" th:text="${text}">新增拥有人222
+            </button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
